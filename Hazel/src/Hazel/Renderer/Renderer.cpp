@@ -18,8 +18,9 @@ namespace Hazel {
 
 	void Renderer::Clear(float r, float g, float b, float a /*= 1.0f*/)
 	{
-		float params[4] = { r, g, b, a };
-		s_Instance->m_CommandQueue.SubmitCommand(RenderCommand::Clear, params, sizeof(float) * 4);
+		HZ_RENDER_4(r, g, b, a) {
+			RendererAPI::Clear(r, g, b, a);
+		}
 	}
 
 	void Renderer::ClearMagenta()
@@ -29,7 +30,14 @@ namespace Hazel {
 
 	void Renderer::SetClearColor(float r, float g, float b, float a)
 	{
-		//HZ_RENDER(SetClearColor(r, g, b, a));
+		
+	}
+
+	void Renderer::DrawIndexed(unsigned int count)
+	{
+		HZ_RENDER_1(count, {
+			RendererAPI::DrawIndexed(count);
+			});
 	}
 
 	void Renderer::WaitAndRender()

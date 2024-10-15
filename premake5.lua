@@ -1,5 +1,7 @@
 workspace "Hazel"
 	architecture "x64"
+	startproject "Sandbox"
+	
 	configurations
 	{
 		"Debug",
@@ -16,7 +18,7 @@ IncludeDir["Glad"] = "Hazel/vendor/Glad/include"
 IncludeDir["ImGui"] = "Hazel/vendor/imgui"
 
 include "Hazel/vendor/GLFW"
-include "Hazel/vendor/GLAD"
+include "Hazel/vendor/Glad"
 include "Hazel/vendor/imgui"
 
 project "Hazel"
@@ -41,7 +43,8 @@ project "Hazel"
 	includedirs
 	{
 		"%{prj.name}/src",
-		"%{prj.name}/vendor/spdlog/include",
+		"%{prj.name}/vendor",
+		--"%{prj.name}/vendor/spdlog/include",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}"
@@ -64,7 +67,8 @@ project "Hazel"
 		{
 			"HZ_PLATFORM_WINDOWS",
 			"HZ_BUILD_DLL",
-			"GLFW_INCLUDE_NONE"
+			"GLFW_INCLUDE_NONE",
+			"IMGUI_API=__declspec(dllexport)"
 		}
 
 		postbuildcommands
@@ -109,7 +113,8 @@ project "Sandbox"
 	includedirs
 	{
 		"Hazel/vendor/spdlog/include",
-		"Hazel/src"
+		"Hazel/src",
+		"Hazel/vendor"
 	}
 
 	links
@@ -124,7 +129,8 @@ project "Sandbox"
 
 		defines
 		{
-			"HZ_PLATFORM_WINDOWS"
+			"HZ_PLATFORM_WINDOWS",
+			"IMGUI_API=__declspec(dllimport)"
 		}
 
 	filter "configurations:Debug"
@@ -141,6 +147,3 @@ project "Sandbox"
 		defines "HZ_DIST"
 		buildoptions "/MD"
 		optimize "on"
-
-	filter { "system:windows", "configurations:Release" }
-        buildoptions "/MT"   

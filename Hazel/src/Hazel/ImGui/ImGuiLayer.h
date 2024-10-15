@@ -13,10 +13,12 @@ namespace Hazel {
 		ImGuiLayer(const std::string& name);
 		virtual ~ImGuiLayer();
 
-		void OnAttach()override;
-		void OnDetach()override;
-		void OnUpdate() override;
-		
+		void Begin();
+		void End();
+
+		virtual void OnAttach()override;
+		virtual void OnDetach()override;
+		virtual void OnImGuiRender() override;
 	
 	private:
 		float m_Time = 0.0f;

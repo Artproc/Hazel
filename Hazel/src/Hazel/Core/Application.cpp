@@ -12,11 +12,16 @@ namespace Hazel {
 
 	Application::Application()
 	{
-		HZ_CORE_ASSERT(!s_Instance, "Application already exists!");
+		
 		s_Instance = this;
 
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+
+		m_ImGuiLayer = new ImGuiLayer("ImGui");
+		PushOverlay(m_ImGuiLayer);
+
+		Renderer::Init();
 	}
 
 	Application::~Application()
@@ -37,6 +42,36 @@ namespace Hazel {
 		layer->OnAttach();
 	}
 
+	void Application::RenderImGui()
+	{
+		m_ImGuiLayer->Begin();
+
+		for (Layer* layer : m_LayerStack)
+			layer->OnImGuiRender();
+
+		m_ImGuiLayer->End();
+	}
+
+	
+	void Application::Run()
+	{
+		OnInit();
+		while (m_Running)
+		{
+			
+			for (Layer* layer : m_LayerStack)
+				layer->OnUpdate();
+
+			Application* app = this;
+			HZ_RENDER_1(app, { app->RenderImGui(); });
+
+			Renderer::Get().WaitAndRender();
+
+			m_Window->OnUpdate();
+		}
+
+	}
+
 	void Application::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
@@ -50,23 +85,12 @@ namespace Hazel {
 				break;
 		}
 	}
-
-
-	void Application::Run()
-	{
-		OnInit();
-		while (m_Running)
-		{
-			
-			for (Layer* layer : m_LayerStack)
-				layer->OnUpdate();
-
-			Renderer::Get().WaitAndRender();
-			m_Window->OnUpdate();
-		}
-
-	}
 	
+	bool Application::OnWindowResize(WindowResizeEvent& e)
+	{
+		return false;
+	}
+
 	bool Application::OnWindowClosed(WindowClosedEvent& e)
 	{
 		m_Running = false;
