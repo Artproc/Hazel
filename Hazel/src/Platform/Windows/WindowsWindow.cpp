@@ -7,6 +7,8 @@
 
 #include "glad/glad.h"
 
+#include <imgui.h>
+
 namespace Hazel {
 
 	static bool s_GLFWInitialized = false;
@@ -103,6 +105,14 @@ namespace Hazel {
 				}
 			});
 
+		glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keyCode)
+			{
+				auto& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+				KeyTypedEvent event(keyCode);
+				data.EventCallback(event);
+			});
+
 		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
 			{
 				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
@@ -140,16 +150,32 @@ namespace Hazel {
 				MouseMovedEvent event((float)xpos,(float)ypos);
 				data.EventCallback(event);
 			});
+
+		m_ImGuiMouseCursors[ImGuiMouseCursor_Arrow] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
+		m_ImGuiMouseCursors[ImGuiMouseCursor_TextInput] = glfwCreateStandardCursor(GLFW_IBEAM_CURSOR);
+		m_ImGuiMouseCursors[ImGuiMouseCursor_ResizeAll] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);   // FIXME: GLFW doesn't have this.
+		m_ImGuiMouseCursors[ImGuiMouseCursor_ResizeNS] = glfwCreateStandardCursor(GLFW_VRESIZE_CURSOR);
+		m_ImGuiMouseCursors[ImGuiMouseCursor_ResizeEW] = glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR);
+		m_ImGuiMouseCursors[ImGuiMouseCursor_ResizeNESW] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);  // FIXME: GLFW doesn't have this.
+		m_ImGuiMouseCursors[ImGuiMouseCursor_ResizeNWSE] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);  // FIXME: GLFW doesn't have this.
+		m_ImGuiMouseCursors[ImGuiMouseCursor_Hand] = glfwCreateStandardCursor(GLFW_HAND_CURSOR);
 	}
+
 	void WindowsWindow::Shutdown()
 	{
 		glfwDestroyWindow(m_Window);
 	}
+
 	void WindowsWindow::OnUpdate()
 	{
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
+
+// 		ImGuiMouseCursor imgui_cursor = ImGui::GetMouseCursor();
+// 		glfwSetCursor(m_Window, m_ImGuiMouseCursors[imgui_cursor] ? m_ImGuiMouseCursors[imgui_cursor] : m_ImGuiMouseCursors[ImGuiMouseCursor_Arrow]);
+// 		glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	}
+
 	void WindowsWindow::SetVSync(bool enabled)
 	{
 		if (enabled)
@@ -158,6 +184,7 @@ namespace Hazel {
 			glfwSwapInterval(0);
 		m_Data.VSync = enabled;
 	}
+
 	bool WindowsWindow::IsVSync() const
 	{
 		return m_Data.VSync;

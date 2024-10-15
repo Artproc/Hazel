@@ -1,21 +1,35 @@
-#include <Hazel.h>
+#include "Hazel.h"
 
-class ExampleLayer : public Hazel::Layer
+#include "Hazel/ImGui/ImGuiLayer.h"
+
+class GameLayer : public Hazel::Layer
 {
 public:
-	ExampleLayer()
-		:Layer("Example")
+	GameLayer()
+	{
+		
+	}
+
+	virtual ~GameLayer()
 	{
 	}
 
-	void OnUpdate() override 
+	virtual void OnAttach() override
 	{
-		HZ_INFO("ExampleLayer::OnUpdate");
 	}
 
-	void OnEvent(Hazel::Event& event) override 
+	virtual void OnDetach() override
 	{
-		HZ_TRACE(event.ToString());
+	}
+
+	virtual void OnUpdate() override
+	{
+		
+		Hazel::Renderer::Clear(0.2f, 0.3f, 0.8f, 1);
+	}
+
+	virtual void OnEvent(Hazel::Event& event) override
+	{
 	}
 };
 
@@ -24,11 +38,13 @@ class Sandbox : public Hazel::Application
 public:
 	Sandbox()
 	{
-		PushLayer(new ExampleLayer());
+		HZ_TRACE("Hello!");
 	}
-	~Sandbox()
-	{
 
+	virtual void OnInit() override
+	{
+		PushLayer(new GameLayer());
+		PushOverlay(new Hazel::ImGuiLayer("ImGui"));
 	}
 };
 

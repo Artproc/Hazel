@@ -19,11 +19,14 @@ namespace Hazel {
 		inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
 		void SetVSync(bool enable) override;
 		bool IsVSync() const override;
+
+		inline void* GetNativeWindow() const { return m_Window; }
 	private:
 		virtual void Init(const WindowProps& props);
 		virtual void Shutdown();
 	private:
 		GLFWwindow* m_Window;
+		GLFWcursor* m_ImGuiMouseCursors[9] = { 0 };
 
 		struct WindowData
 		{
