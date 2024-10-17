@@ -32,7 +32,7 @@ namespace Hazel {
 	private:
 		bool OnWindowResize(WindowResizeEvent& e);
 		bool OnWindowClosed(WindowClosedEvent& e);
-
+	private:
 		std::unique_ptr<Window> m_Window;
 		bool m_Running = true;
 		LayerStack m_LayerStack;

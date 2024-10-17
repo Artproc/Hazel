@@ -8,17 +8,17 @@
 
 namespace Hazel {
 
-#define BIND_EVENT_FN(x) std::bind(&Application::x, this,std::placeholders::_1)
+	//#define BIND_EVENT_FN(x) std::bind(&Application::x, this,std::placeholders::_1)
 
 	Application* Application::s_Instance = nullptr;
 
 	Application::Application()
 	{
-		
+
 		s_Instance = this;
 
 		m_Window = std::unique_ptr<Window>(Window::Create());
-		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+		m_Window->SetEventCallback(HZ_BIND_EVENT_FN(Application::OnEvent));
 
 		m_ImGuiLayer = new ImGuiLayer("ImGui");
 		PushOverlay(m_ImGuiLayer);
@@ -33,7 +33,7 @@ namespace Hazel {
 
 	void Application::PushLayer(Layer* layer)
 	{
-		
+
 		m_LayerStack.PushLayer(layer);
 		layer->OnAttach();
 	}
@@ -54,13 +54,13 @@ namespace Hazel {
 		m_ImGuiLayer->End();
 	}
 
-	
+
 	void Application::Run()
 	{
 		OnInit();
 		while (m_Running)
 		{
-			
+
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
 
@@ -78,7 +78,7 @@ namespace Hazel {
 	void Application::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<WindowClosedEvent>(BIND_EVENT_FN(OnWindowClosed));
+		dispatcher.Dispatch<WindowClosedEvent>(HZ_BIND_EVENT_FN(Application::OnWindowClosed));
 
 
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )
@@ -88,7 +88,7 @@ namespace Hazel {
 				break;
 		}
 	}
-	
+
 	bool Application::OnWindowResize(WindowResizeEvent& e)
 	{
 		return false;
