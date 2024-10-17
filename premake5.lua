@@ -13,9 +13,10 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 --Include directories relative to root folder(solution directory)
 IncludeDir = {}
-IncludeDir["GLFW"] = "Hazel/vendor/GLFW/include"
-IncludeDir["Glad"] = "Hazel/vendor/Glad/include"
+IncludeDir["GLFW"]  = "Hazel/vendor/GLFW/include"
+IncludeDir["Glad"]  = "Hazel/vendor/Glad/include"
 IncludeDir["ImGui"] = "Hazel/vendor/imgui"
+IncludeDir["glm"]   = "Hazel/vendor/glm"
 
 include "Hazel/vendor/GLFW"
 include "Hazel/vendor/Glad"
@@ -25,6 +26,7 @@ project "Hazel"
 	location "Hazel"
 	kind "SharedLib"
 	language "C++"
+	staticruntime "off"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -37,16 +39,18 @@ project "Hazel"
 		"%{prj.name}/src/**.h", 
 		"%{prj.name}/src/**.c", 
 		"%{prj.name}/src/**.hpp", 
-		"%{prj.name}/src/**.cpp" 
+		"%{prj.name}/src/**.cpp" ,
+		"%{prj.name}/vendor/glm/glm/**.hpp",
+		"%{prj.name}/vendor/glm/glm/**.inl",
 	}
 
 	includedirs
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/vendor",
-		--"%{prj.name}/vendor/spdlog/include",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
+		"%{IncludeDir.glm}",
 		"%{IncludeDir.ImGui}"
 	}
 
@@ -60,7 +64,6 @@ project "Hazel"
 
 	filter "system:windows"
 		cppdialect "C++latest"
-		staticruntime "on"
 		systemversion "latest"
 
 		defines
@@ -98,6 +101,8 @@ project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
+	systemversion "latest"
+    staticruntime "off"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -114,7 +119,8 @@ project "Sandbox"
 	{
 		"Hazel/vendor/spdlog/include",
 		"Hazel/src",
-		"Hazel/vendor"
+		"Hazel/vendor",
+		"%{IncludeDir.glm}"
 	}
 
 	links
@@ -124,7 +130,6 @@ project "Sandbox"
 
 	filter "system:windows"
 		cppdialect "C++latest"
-		staticruntime "on"
 		systemversion "latest"
 
 		defines

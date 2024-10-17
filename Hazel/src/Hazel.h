@@ -12,6 +12,10 @@
 #include "Hazel/Core/Events/KeyEvent.h"
 #include "Hazel/Core/Events/MouseEvent.h"
 
+#include "Hazel/Core/Input.h"
+#include "Hazel/Core/KeyCodes.h"
+#include "Hazel/Core/MouseButtonCodes.h"
+
 #include "imgui/imgui.h"
 
 // --- Hazel Render API ------------------------------
@@ -20,6 +24,7 @@
 #include "Hazel/Renderer/VertexBuffer.h"
 #include "Hazel/Renderer/IndexBuffer.h"
 #include "Hazel/Renderer/Texture.h"
+#include "Hazel/Renderer/Shader.h"
 // ---------------------------------------------------
 
 //**************Entry Point****************

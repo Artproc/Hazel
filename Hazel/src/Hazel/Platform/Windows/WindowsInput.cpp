@@ -7,6 +7,7 @@
 
 namespace Hazel
 {
+	Input* Input::s_Instance = new WindowsInput();
 
 	bool WindowsInput::IsKeyPressedImpl(int keycode)
 	{
@@ -23,20 +24,25 @@ namespace Hazel
 		return state == GLFW_PRESS;
 	}
 
+	std::pair<float, float> WindowsInput::GetMousePositionImpl()
+	{
+		auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
+		double xpos, ypos;
+		glfwGetCursorPos(window, &xpos, &ypos);
+
+		return { (float)xpos, (float)ypos };
+	}
+
 	float WindowsInput::GetMouseXImpl()
 	{
-		auto& window = static_cast<WindowsWindow&>(Application::Get().GetWindow());
-		double xpos, ypos;
-		glfwGetCursorPos(static_cast<GLFWwindow*>(window.GetNativeWindow()), &xpos, &ypos);
-		return (float)xpos;
+		auto [x, y] = GetMousePositionImpl();
+		return x;
 	}
 
 	float WindowsInput::GetMouseYImpl()
 	{
-		auto& window = static_cast<WindowsWindow&>(Application::Get().GetWindow());
-		double xpos, ypos;
-		glfwGetCursorPos(static_cast<GLFWwindow*>(window.GetNativeWindow()), &xpos, &ypos);
-		return (float)ypos;
+		auto [x, y] = GetMousePositionImpl();
+		return y;
 	}
 
 }

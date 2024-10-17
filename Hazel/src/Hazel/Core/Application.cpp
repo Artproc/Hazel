@@ -4,6 +4,8 @@
 #include "Hazel/Renderer/Renderer.h"
 #include "glad/glad.h"
 
+#include "Input.h"
+
 namespace Hazel {
 
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this,std::placeholders::_1)
@@ -61,6 +63,7 @@ namespace Hazel {
 			
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
+
 
 			Application* app = this;
 			HZ_RENDER_1(app, { app->RenderImGui(); });
