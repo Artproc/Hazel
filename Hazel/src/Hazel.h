@@ -21,8 +21,7 @@
 // --- Hazel Render API ------------------------------
 #include "Hazel/Renderer/Renderer.h"
 #include "Hazel/Renderer/FrameBuffer.h"
-#include "Hazel/Renderer/VertexBuffer.h"
-#include "Hazel/Renderer/IndexBuffer.h"
+#include "Hazel/Renderer/Buffer.h"
 #include "Hazel/Renderer/Texture.h"
 #include "Hazel/Renderer/Shader.h"
 // ---------------------------------------------------
