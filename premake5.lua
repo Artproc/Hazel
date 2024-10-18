@@ -44,6 +44,11 @@ project "Hazel"
 		"%{prj.name}/src/**.cpp" 
 	}
 
+	defines
+	{
+		_CRT_SECURE_NO_WARNINGS
+	}
+
 	includedirs
 	{
 		"%{prj.name}/src",
@@ -75,17 +80,17 @@ project "Hazel"
 
 	filter "configurations:Debug"
 		defines "HZ_DEBUG"
-		buildoptions "/MDd"
+		runtime "Debug"
 		symbols "on"
 
 	filter "configurations:Release"
 		defines "HZ_RELEASE"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "on"
 
 	filter "configurations:Dist"
 		defines "HZ_DIST"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "on"
 
 
@@ -131,15 +136,15 @@ project "Sandbox"
 
 	filter "configurations:Debug"
 		defines "HZ_DEBUG"
-		buildoptions "/MDd"
+		runtime "Debug"
 		symbols "on"
 
 	filter "configurations:Release"
 		defines "HZ_RELEASE"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "on"
 
 	filter "configurations:Dist"
 		defines "HZ_DIST"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "on"

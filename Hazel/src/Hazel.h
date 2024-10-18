@@ -19,11 +19,7 @@
 #include "imgui/imgui.h"
 
 // --- Hazel Render API ------------------------------
-#include "Hazel/Renderer/Renderer.h"
-#include "Hazel/Renderer/FrameBuffer.h"
-#include "Hazel/Renderer/Buffer.h"
-#include "Hazel/Renderer/Texture.h"
-#include "Hazel/Renderer/Shader.h"
+
 // ---------------------------------------------------
 
 //**************Entry Point****************
