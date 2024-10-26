@@ -3,11 +3,12 @@
 #include "Hazel/Core/Base.h"
 #include "Hazel/Core/Window.h"
 #include "Hazel/Core/LayerStack.h"
+#include "Hazel/Core/Events/Event.h"
 #include "Hazel/Core/Events/ApplicationEvent.h"
+
+#include "Hazel/Core/Timestep.h"
 #include "Hazel/ImGui/ImGuiLayer.h"
-#include "Hazel/Renderer/Shader.h"
-#include "Hazel/Renderer/Buffer.h"
-#include "Hazel/Renderer/VertexArray.h"
+
 
 namespace Hazel {
 
@@ -15,7 +16,7 @@ namespace Hazel {
 	{
 	public:
 		Application();
-		virtual ~Application();
+		virtual ~Application() = default;
 
 		void Run();
 
@@ -35,11 +36,7 @@ namespace Hazel {
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 
-		std::shared_ptr<Shader> m_Shader;
-		std::shared_ptr<VertexArray> m_VertexArray;
-
-		std::shared_ptr<Shader> m_BlueShader;
-		std::shared_ptr<VertexArray> m_SquareVA;
+		float m_LastFrameTime = 0.0f;
 	private:
 		static Application* s_Instance;
 	};
