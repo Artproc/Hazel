@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 namespace Hazel {
 
 	void InitializeCore();
@@ -28,3 +30,14 @@ namespace Hazel {
 #define BIT(x) (1 << x)
 
 #define HZ_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
+
+//Pointer wrappers
+namespace Hazel {
+	template<typename T>
+	using Scope = std::unique_ptr<T>;
+
+	template<typename T>
+	using Ref = std::shared_ptr<T>;
+
+	using byte = unsigned char;
+}
