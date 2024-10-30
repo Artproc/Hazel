@@ -187,6 +187,12 @@ public:
 	void OnEvent(Hazel::Event& e) override
 	{
 		m_CameraController.OnEvent(e);
+
+		if (e.GetEventType() == Hazel::EventType::WindowResize)
+		{
+			auto& re = (Hazel::WindowResizeEvent&)e;
+
+		}
 	}
 private:
 	Hazel::ShaderLibrary m_ShaderLibrary;
