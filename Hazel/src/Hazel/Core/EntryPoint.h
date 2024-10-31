@@ -6,13 +6,19 @@ extern Hazel::Application* Hazel::CreateApplication();
 
 int main(int argc, char** argv)
 {
+	HZ_PROFILE_BEGIN_SESSION("Startup", "HazelProfile-startup.json");
 	Hazel::InitializeCore();
 	Hazel::Application* app = Hazel::CreateApplication();
-	HZ_CORE_ASSERT(app, "Client Application is null!");
+	HZ_PROFILE_END_SESSION();
+
+	HZ_PROFILE_BEGIN_SESSION("Runtime", "HazelProfile - Runtime.json");
 	app->Run();
+	HZ_PROFILE_END_SESSION();
+
+	HZ_PROFILE_BEGIN_SESSION("Startup", "HazelProfile-Shutdown.json");
 	delete app;
 	Hazel::ShutdownCore();
+	HZ_PROFILE_END_SESSION();
 }
-
 
 #endif // HZ_PLATFORM_WINDOWS
