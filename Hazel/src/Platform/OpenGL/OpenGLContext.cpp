@@ -19,10 +19,14 @@ namespace Hazel {
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		HZ_CORE_ASSERT(status, "Failed to initialize Glad!");
 
+		int maxTextureSlots = 0;
+		glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureSlots);
+
 		HZ_CORE_INFO("OpenGL Info:");
 		HZ_CORE_INFO("  Vendor:   {0}",   (const char*)glGetString(GL_VENDOR));
 		HZ_CORE_INFO("  Renderer: {0}", (const char*)glGetString(GL_RENDERER));
 		HZ_CORE_INFO("  Version:  {0}",  (const char*)glGetString(GL_VERSION));
+		HZ_CORE_INFO("  Max texture slots: {0}", maxTextureSlots);
 
 #ifdef HZ_ENABLE_ASSERTS
 		int versionMajor;
