@@ -1,5 +1,8 @@
 #pragma once
 
+#include "Hazel/Core.h"
+#include "Events/Event.h"
+
 namespace Hazel {
 
 	class Application
