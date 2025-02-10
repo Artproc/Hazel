@@ -8,11 +8,11 @@ public:
 	ExampleLayer()
 		: Layer("Example")
 	{
-	} 
+	}
 
 	void OnUpdate() override
 	{
-		
+
 
 		if (Hazel::Input::IsKeyPressed(HZ_KEY_TAB))
 			HZ_TRACE("Tab key is pressed (poll)!");
