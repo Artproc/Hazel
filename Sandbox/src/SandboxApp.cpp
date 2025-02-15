@@ -1,18 +1,20 @@
 #include "Hazel.h"
+#include <Hazel/Core/EntryPoint.h>
 
 #include "imgui/imgui.h"
 #include "Platform/OpenGL/OpenGLShader.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "Hazel/Renderer/Shader.h"
+#include "Sandbox2D.h"
 
 class ExampleLayer : public Hazel::Layer
 {
 public:
 	ExampleLayer()
-		: Layer("Example"), m_CameraController(1920.0f/1080.0f)
+		: Layer("Example"), m_CameraController(1920.0f / 1080.0f)
 	{
-		m_VertexArray.reset(Hazel::VertexArray::Create());
+		m_VertexArray= Hazel::VertexArray::Create();
 
 		float vertices[3 * 7] =
 		{
@@ -38,7 +40,7 @@ public:
 		indexBuffer.reset(Hazel::IndexBuffer::Create(indices, sizeof(indices) / sizeof(unsigned int)));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
-		m_SquareVA.reset(Hazel::VertexArray::Create());
+		m_SquareVA = Hazel::VertexArray::Create();
 
 		float squareVertices[5 * 4] = {
 			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
@@ -151,7 +153,7 @@ public:
 		Hazel::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		Hazel::RenderCommand::Clear();
 
-		
+
 		Hazel::Renderer::BeginScene(m_CameraController.GetCamera());
 
 		static glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
@@ -164,9 +166,9 @@ public:
 		{
 			for (int x = 0; x < 20; x++)
 			{
-				glm::vec3 pos(x * 0.11f,y * 0.11f, 0.0f);
+				glm::vec3 pos(x * 0.11f, y * 0.11f, 0.0f);
 				glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
-				
+
 				Hazel::Renderer::Submit(m_FlatColorShader, m_SquareVA, transform);
 			}
 		}
@@ -189,7 +191,7 @@ public:
 	void OnImGuiRender()
 	{
 		ImGui::Begin("Settings");
-		ImGui::ColorEdit3("Square Color",glm::value_ptr(m_SquareColor) );
+		ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));
 		ImGui::End();
 	}
 
@@ -210,8 +212,8 @@ private:
 	Hazel::Ref<Hazel::Texture2D> m_Texture, m_ChernoLogoTexture;
 
 	Hazel::OrthographicCameraController m_CameraController;
-	
-	glm::vec3 m_SquareColor = {0.2f, 0.3f, 0.8f};
+
+	glm::vec3 m_SquareColor = { 0.2f, 0.3f, 0.8f };
 };
 
 class Sandbox : public Hazel::Application
@@ -219,8 +221,9 @@ class Sandbox : public Hazel::Application
 public:
 	Sandbox()
 	{
-		PushLayer(new ExampleLayer());
-	}
+		//PushLayer(new ExampleLayer());
+		PushLayer(new Sandbox2D());
+	}	
 
 	~Sandbox()
 	{
