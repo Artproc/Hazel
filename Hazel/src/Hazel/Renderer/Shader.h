@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Hazel/Core/Base.h"
 #include <string>
 #include <unordered_map>
 #include <glm/glm.hpp>

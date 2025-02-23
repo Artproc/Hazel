@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Hazel/Core/Base.h"
 #include "Hazel/Renderer/VertexArray.h"
 
 namespace Hazel {
@@ -20,6 +20,7 @@ namespace Hazel {
 		virtual const Ref<IndexBuffer>& GetIndexBuffer() const { return m_IndexBuffer; }
 	private:
 		uint32_t m_RendererID;
+		uint32_t m_VertexBufferIndex = 0;
 		std::vector<Ref<VertexBuffer>> m_VertexBuffers;
 		Ref<IndexBuffer> m_IndexBuffer;
 

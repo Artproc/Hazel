@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Hazel/Core/Base.h"
 #include "Hazel/Renderer/Shader.h"
 #include "glm/glm.hpp"
 

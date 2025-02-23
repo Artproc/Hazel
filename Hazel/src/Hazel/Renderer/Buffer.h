@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Hazel/Core/Base.h"
+
 namespace Hazel {
 
 	enum class ShaderDataType
