@@ -1,6 +1,7 @@
 #pragma once
 
 #include "OrthographicCamera.h"
+#include "Hazel/Renderer/Camera.h"
 #include "Texture.h"
 
 namespace Hazel {
@@ -11,7 +12,8 @@ namespace Hazel {
 		static void Init();
 		static void Shutdown();
 
-		static void BeginScene(const OrthographicCamera& camera);
+		static void BeginScene(const Camera& camera, glm::mat4& transform);
+		static void BeginScene(const OrthographicCamera& camera);// TODO: Remove
 		static void EndScene();
 		static void Flush();
 
