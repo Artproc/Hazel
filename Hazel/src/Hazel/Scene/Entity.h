@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Hazel/Core/Base.h"
 #include "Scene.h"
 
 #include "entt.hpp"
@@ -47,4 +48,6 @@ namespace Hazel {
 		entt::entity m_EntityHandle{entt::null};
 		Scene* m_Scene = nullptr;
 	};
+
+
 }
