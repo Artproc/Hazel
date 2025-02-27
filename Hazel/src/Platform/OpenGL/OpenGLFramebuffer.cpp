@@ -1,6 +1,6 @@
 #include "hzpch.h"
 
-#include "OpenGLFramebuffer.h"
+#include "Platform/OpenGL/OpenGLFramebuffer.h"
 
 #include <glad/glad.h>
 
