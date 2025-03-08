@@ -152,7 +152,7 @@ namespace Hazel {
 		{
 		
 			int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
-			HZ_CORE_WARN("Pixel data = {0}", pixelData);
+			m_HoveredEntity = pixelData == -1 ? Entity() : Entity((entt::entity)pixelData, m_ActiveScene.get());
 		}
 
 		m_Framebuffer->Unbind();
@@ -245,6 +245,11 @@ namespace Hazel {
 		m_SceneHierarchyPanel.OnImGuiRender();
 
 		ImGui::Begin("Stats");
+
+		std::string name = "None";
+		if (m_HoveredEntity)
+			name = m_HoveredEntity.GetComponent<TagComponent>().Tag;
+		ImGui::Text("Hovered Entity: %s", name.c_str());
 
 		auto stats = Hazel::Renderer2D::GetStats();
 		ImGui::Text("Renderer2D Stats:");
@@ -392,17 +397,29 @@ namespace Hazel {
 
 		// Gizmos
 		case Key::Q:
-			m_GizmoType = -1;
+		{
+			if (!ImGuizmo::IsUsing())
+				m_GizmoType = -1;
 			break;
+		}
 		case Key::W:
-			m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
+		{
+			if (!ImGuizmo::IsUsing())
+				m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
 			break;
+		}
 		case Key::E:
-			m_GizmoType = ImGuizmo::OPERATION::ROTATE;
+		{
+			if (!ImGuizmo::IsUsing())
+				m_GizmoType = ImGuizmo::OPERATION::ROTATE;
 			break;
+		}
 		case Key::R:
-			m_GizmoType = ImGuizmo::OPERATION::SCALE;
+		{
+			if (!ImGuizmo::IsUsing())
+				m_GizmoType = ImGuizmo::OPERATION::SCALE;
 			break;
+		}
 
 		}
 	}
