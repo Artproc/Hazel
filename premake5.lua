@@ -11,6 +11,14 @@ workspace "Hazel"
 
 	outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+	-- Include directories relative to root folder (solution directory)
+	IncludeDir = {}
+	IncludeDir["GLFW"] = "Hazel/vendor/GLFW/include"
+
+	group "Dependencies"
+		include "Hazel/vendor/GLFW"
+	group""
+
 	project "Hazel"
 		location "Hazel"
 		kind "SharedLib"
@@ -32,7 +40,14 @@ workspace "Hazel"
 		includedirs
 		{
 			"%{prj.name}/src",
-			"%{prj.name}/vendor/spdlog/include"
+			"%{prj.name}/vendor/spdlog/include",
+			"%{IncludeDir.GLFW}"
+		}
+
+		links
+		{
+			"GLFW",
+			"opengl32.lib"
 		}
 
 		filter "system:windows"
@@ -49,7 +64,7 @@ workspace "Hazel"
 
 			postbuildcommands
 			{
-				("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
+				("{COPYFILE} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
 			}
 
 		filter "configurations:Debug"
