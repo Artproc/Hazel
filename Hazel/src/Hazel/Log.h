@@ -1,6 +1,5 @@
 #pragma once
 
-#include <memory>
 #include "Base.h"
 
 #pragma warning(push, 0)
