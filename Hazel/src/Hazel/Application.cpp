@@ -3,7 +3,7 @@
 
 
 #include "Log.h"
-#include <GLFW/glfw3.h>
+#include <glad/glad.h>
 
 namespace Hazel {
 
@@ -52,8 +52,8 @@ namespace Hazel {
 
 		while (m_Running)
 		{
-			//glClearColor(0.2f, 0.3f, 0.8f, 1.0f);
-			//glClear(GL_COLOR_BUFFER_BIT);
+			glClearColor(0.2f, 0.3f, 0.8f, 1.0f);
+			glClear(GL_COLOR_BUFFER_BIT);
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
