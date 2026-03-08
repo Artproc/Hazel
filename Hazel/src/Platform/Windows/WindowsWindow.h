@@ -28,8 +28,8 @@ namespace Hazel {
 		GLFWwindow* m_Window;
 		struct WindowData
 		{
-			std::string Title;
-			unsigned int Width, Height;
+			std::string Title = "";
+			unsigned int Width = 0, Height = 0;
 			bool VSync;
 			EventCallbackFn EventCallback;
 		};
