@@ -26,9 +26,10 @@ workspace "Hazel"
 
 	project "Hazel"
 		location "Hazel"
-		kind "SharedLib"
+		kind "StaticLib"
 		language "C++"
-		
+		cppdialect "C++latest"
+		staticruntime "on"
 
 		targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 		objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -42,6 +43,11 @@ workspace "Hazel"
 			"%{prj.name}/src/**.cpp",
 			"%{prj.name}/vendor/glm/glm/**.hpp",
 			"%{prj.name}/vendor/glm/glm/**.inl"
+		}
+
+		defines
+		{
+			"_CRT_SECURE_NO_WARNINGS"
 		}
 
 		includedirs
@@ -63,8 +69,6 @@ workspace "Hazel"
 		}
 
 		filter "system:windows"
-			cppdialect "C++latest"
-			staticruntime "off"
 			systemversion "latest"
 
 			defines
@@ -72,11 +76,6 @@ workspace "Hazel"
 				"HZ_PLATFORM_WINDOWS",
 				"HZ_BUILD_DLL",
 				"GLFW_INCLUDE_NONE"
-			}
-
-			postbuildcommands
-			{
-				("{COPYFILE} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
 			}
 
 		filter "configurations:Debug"
@@ -101,8 +100,9 @@ workspace "Hazel"
 		location "Sandbox"
 		kind "ConsoleApp"
 		language "C++"
+		cppdialect "C++latest"
+		staticruntime "on"
 		
-
 		targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 		objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
@@ -126,8 +126,7 @@ workspace "Hazel"
 		}
 
 		filter "system:windows"
-			cppdialect "C++latest"
-			staticruntime "off"
+			
 			systemversion "latest"
 
 		defines
