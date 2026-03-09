@@ -16,6 +16,15 @@ namespace Hazel {
 		glfwMakeContextCurrent(m_WindowHandle);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		HZ_CORE_ASSERT(status, "Failed to initialize Glad!");
+
+		HZ_CORE_INFO("OpenGL Info:");
+		HZ_CORE_INFO("  Vendor: {0}", (const char*)glGetString(GL_VENDOR));
+		HZ_CORE_INFO("  Renderer: {0}", (const char*)glGetString(GL_RENDERER));
+		HZ_CORE_INFO("  Version: {0}", (const char*)glGetString(GL_VERSION));
+		HZ_CORE_INFO("  Supported glsl version:: {0}", (const char*)glGetString(GL_SHADING_LANGUAGE_VERSION));
+		int maxTextureSamplers;
+		glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureSamplers);
+		HZ_CORE_INFO("  Max Texture Samplers:: {0}", maxTextureSamplers);
 	}
 
 	void OpenGLContext::SwapBuffers()
