@@ -67,7 +67,7 @@ namespace Hazel {
 			index++;
 		}
 		m_VertexBuffers.push_back(vertexBuffer);
-		m_VertexBufferIndexOffset += layout.GetElements().size();
+		m_VertexBufferIndexOffset += static_cast<uint32_t>(layout.GetElements().size());
 	}
 
 	void OpenGLVertexArray::SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer)
