@@ -1,5 +1,6 @@
 #include <hzpch.h>
 #include "Application.h"
+#include "Hazel/Renderer/Renderer.h"
 #include <glfw/glfw3.h>
 
 namespace Hazel {
@@ -16,6 +17,8 @@ namespace Hazel {
 
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+
+		Renderer::Init();
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);		

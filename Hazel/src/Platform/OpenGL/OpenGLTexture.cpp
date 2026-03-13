@@ -29,7 +29,7 @@ namespace Hazel {
 			internalFormat = GL_RGB8;
 			dataFormat = GL_RGB;
 		}
-		HZ_CORE_ASSERT(internalFormat && dataFormat, "Unsupported image format!");
+		HZ_CORE_ASSERT(internalFormat & dataFormat, "Unsupported image format!");
 
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
 		glTextureStorage2D(m_RendererID, 1, internalFormat, m_Width, m_Height);
