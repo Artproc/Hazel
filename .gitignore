@@ -8,11 +8,12 @@ Intermediates/
 
 # Visual Studio files and folder
 .vs/
-**.sln
+**.slnx
 **.vcxproj
 **.vcxproj.filters
 **.vcxproj.user
 **.csproj
+*.json
 
 # Directories
 Hazel/vendor/VulkanSDK
