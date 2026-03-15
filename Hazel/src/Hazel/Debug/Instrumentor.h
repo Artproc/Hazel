@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <chrono>
 #include <fstream>
+#include <mutex>
+#include <sstream>
 #include <string>
 #include <thread>
 
@@ -62,6 +64,8 @@ namespace Hazel {
 			InternalEndSession();
 		}
 
+#pragma warning(push)
+#pragma warning(disable: 26115) // Failing to release lock - false positive, std::lock_guard releases via RAII
 		void WriteProfile(const ProfileResult& result)
 		{
 			std::stringstream json;
@@ -85,6 +89,7 @@ namespace Hazel {
 				m_OutputStream.flush();
 			}
 		}
+#pragma warning(pop)
 
 		static Instrumentor& Get() {
 			static Instrumentor instance;
