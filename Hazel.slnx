@@ -7,7 +7,9 @@
   </Configurations>
   <Project Path="Hazel\Hazel.vcxproj" Id="99294D0D-053E-75BE-CEBF-181E3A9371EF">
   </Project>
-  <Project Path="Sandbox\Sandbox.vcxproj" Id="F4C124E3-60A1-A37E-69B9-2E55D5170AE0" DefaultStartup="true">
+  <Project Path="Hazelnut\Hazelnut.vcxproj" Id="7052FE3C-5C1F-5948-8538-47F071648ED6" DefaultStartup="true">
+  </Project>
+  <Project Path="Sandbox\Sandbox.vcxproj" Id="F4C124E3-60A1-A37E-69B9-2E55D5170AE0">
   </Project>
   <Folder Name="/Dependencies/">
     <Project Path="Hazel\vendor\Glad\Glad.vcxproj" Id="BDD6857C-A90D-870D-52FA-6C103E10030F">
