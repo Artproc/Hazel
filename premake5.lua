@@ -18,6 +18,7 @@ workspace "Hazel"
 	IncludeDir["ImGui"] = "Hazel/vendor/imgui/"
 	IncludeDir["glm"] = "Hazel/vendor/glm/"
 	IncludeDir["stb_image"] = "Hazel/vendor/stb_image/"
+	IncludeDir["entt"] = "Hazel/vendor/entt/include"
 
 	group "Dependencies"
 		include "Hazel/vendor/GLFW"
@@ -50,7 +51,8 @@ workspace "Hazel"
 
 		defines
 		{
-			"_CRT_SECURE_NO_WARNINGS"
+			"_CRT_SECURE_NO_WARNINGS",
+			"GLFW_INCLUDE_NONE"
 		}
 
 		includedirs
@@ -61,7 +63,8 @@ workspace "Hazel"
 			"%{IncludeDir.Glad}",
 			"%{IncludeDir.ImGui}",
 			"%{IncludeDir.glm}",
-			"%{IncludeDir.stb_image}"
+			"%{IncludeDir.stb_image}",
+			"%{IncludeDir.entt}"
 		}
 
 		links
@@ -75,13 +78,7 @@ workspace "Hazel"
 		filter "system:windows"
 			systemversion "latest"
 
-			defines
-			{
-				"HZ_PLATFORM_WINDOWS",
-				"HZ_BUILD_DLL",
-				"GLFW_INCLUDE_NONE"
-			}
-
+			
 		filter "configurations:Debug"
 			defines "HZ_DEBUG"
 			runtime "Debug"
@@ -156,7 +153,7 @@ workspace "Hazel"
 			optimize "on"
 			buildoptions "/utf-8"
 
-		project "Hazelnut"
+	project "Hazelnut"
 		location "Hazelnut"
 		kind "ConsoleApp"
 		language "C++"
@@ -177,7 +174,8 @@ workspace "Hazel"
 			"Hazel/vendor/spdlog/include",
 			"Hazel/src",
 			"Hazel/vendor",
-			"%{IncludeDir.glm}"
+			"%{IncludeDir.glm}",
+			"%{IncludeDir.entt}"
 		}
 
 		links
