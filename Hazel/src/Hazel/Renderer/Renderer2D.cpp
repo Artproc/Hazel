@@ -22,7 +22,7 @@ namespace Hazel {
 		static const uint32_t MaxQuads = 20000;
 		static const uint32_t MaxVertices = MaxQuads * 4;
 		static const uint32_t MaxIndices = MaxQuads * 6;
-		static const uint32_t MaxTextureSlots = 31; // TODO: RenderCaps
+		static const uint32_t MaxTextureSlots = 32; // TODO: RenderCaps
 
 		Ref<VertexArray> QuadVertexArray;
 		Ref<VertexBuffer> QuadVertexBuffer;
@@ -36,7 +36,12 @@ namespace Hazel {
 		std::array<Ref<Texture2D>, MaxTextureSlots> TextureSlots;
 		uint32_t TextureSlotIndex = 1; // 0 = white texture
 
-		glm::vec4 QuadVertexPositions[4];
+		glm::vec4 QuadVertexPositions[4] = {
+			{ -0.5f, -0.5f, 0.0f, 1.0f },
+			{  0.5f, -0.5f, 0.0f, 1.0f },
+			{  0.5f,  0.5f, 0.0f, 1.0f },
+			{ -0.5f,  0.5f, 0.0f, 1.0f }
+		};
 
 		Renderer2D::Statistics Stats;
 	};
@@ -97,11 +102,6 @@ namespace Hazel {
 
 		// Set all texture slots to 0 (white texture)
 		s_Data.TextureSlots[0] = s_Data.WhiteTexture;
-
-		s_Data.QuadVertexPositions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
-		s_Data.QuadVertexPositions[1] = {  0.5f, -0.5f, 0.0f, 1.0f };
-		s_Data.QuadVertexPositions[2] = {  0.5f,  0.5f, 0.0f, 1.0f };
-		s_Data.QuadVertexPositions[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
 	}
 
 	void Renderer2D::Shutdown()
@@ -140,7 +140,7 @@ namespace Hazel {
 
 		// Bind textures
 		uint32_t textureSlotCount = s_Data.TextureSlotIndex < Renderer2DData::MaxTextureSlots ? s_Data.TextureSlotIndex : Renderer2DData::MaxTextureSlots;
-		for (uint32_t i = 0; i < textureSlotCount; i++)
+		for (uint32_t i = 0; i < textureSlotCount && i < Renderer2DData::MaxTextureSlots; i++)
 			s_Data.TextureSlots[i]->Bind(i);
 		RenderCommand::DrawIndexed(s_Data.QuadVertexArray, s_Data.QuadIndexCount);
 
@@ -243,9 +243,12 @@ namespace Hazel {
 			if (s_Data.TextureSlotIndex >= Renderer2DData::MaxTextureSlots)
 				FlushAndReset();
 
-			textureIndex = (float)s_Data.TextureSlotIndex;
-			s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
-			s_Data.TextureSlotIndex++;
+			if (s_Data.TextureSlotIndex < Renderer2DData::MaxTextureSlots)
+			{
+				textureIndex = (float)s_Data.TextureSlotIndex;
+				s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
+				s_Data.TextureSlotIndex++;
+			}
 		}
 
 		for (size_t i = 0; i < quadVertexCount; i++)
@@ -333,9 +336,12 @@ namespace Hazel {
 			if (s_Data.TextureSlotIndex >= Renderer2DData::MaxTextureSlots)
 				FlushAndReset();
 
-			textureIndex = (float)s_Data.TextureSlotIndex;
-			s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
-			s_Data.TextureSlotIndex++;
+			if (s_Data.TextureSlotIndex < Renderer2DData::MaxTextureSlots)
+			{
+				textureIndex = (float)s_Data.TextureSlotIndex;
+				s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
+				s_Data.TextureSlotIndex++;
+			}
 		}
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
