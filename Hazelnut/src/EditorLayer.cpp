@@ -11,8 +11,7 @@ namespace Hazel {
 
 	EditorLayer::EditorLayer()
 		: Layer("EditorLayer"), m_CameraController(1920.0f / 1080.0f)
-	{
-	}
+	{}
 
 	void EditorLayer::OnAttach()
 	{
@@ -39,6 +38,38 @@ namespace Hazel {
 		m_SecondCamera = m_ActiveScene->CreateEntity("Second Camera Entity");
 		auto& cc = m_SecondCamera.AddComponent<CameraComponent>();
 		cc.Primary = false;
+
+		class CameraController : public ScriptableEntity
+		{
+		public:
+			void OnCreate()
+			{
+				auto& transform = GetComponent<TransformComponent>().Transform;
+				transform[3][0] = rand() % 10 - 5.0f;
+			}
+
+			void OnDestroy()
+			{}
+
+			void OnUpdate(Timestep ts)
+			{
+				auto& transform = GetComponent<TransformComponent>().Transform;
+				float speed = 5.0f;
+
+				if (Input::IsKeyPressed(Key::A))
+					transform = glm::translate(transform, glm::vec3(-1.0f, 0.0f, 0.0f) * (speed * ts.GetSeconds()));
+				if (Input::IsKeyPressed(Key::W))
+					transform = glm::translate(transform, glm::vec3(0.0f, 1.0f, 0.0f) * (speed * ts.GetSeconds()));
+				if (Input::IsKeyPressed(Key::S))
+					transform = glm::translate(transform, glm::vec3(0.0f, -1.0f, 0.0f) * (speed * ts.GetSeconds()));
+				if (Input::IsKeyPressed(Key::D))
+					transform = glm::translate(transform, glm::vec3(1.0f, 0.0f, 0.0f) * (speed * ts.GetSeconds()));
+
+			}
+		};
+
+		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+		m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 	}
 
 	void EditorLayer::OnDetach()
@@ -195,8 +226,8 @@ namespace Hazel {
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 		m_ViewportSize = { (float)viewportPanelSize.x, (float)viewportPanelSize.y };
 
-		uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
-		ImGui::Image((void*)(uintptr_t)textureID, ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0,1 }, ImVec2{ 1, 0 });
+		uint64_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
+		ImGui::Image(reinterpret_cast<void*>(textureID), ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0,1 }, ImVec2{ 1, 0 });
 		ImGui::End();
 		ImGui::PopStyleVar();
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "hzpch.h"
+#include <sstream>
 
 #include "Hazel/Events/Event.h"
 
@@ -25,7 +25,8 @@ namespace Hazel {
 	{
 	public:
 		using EventCallbackFn = std::function<void(Event&)>;
-		virtual ~Window() {}
+
+		virtual ~Window() = default;
 
 		virtual void OnUpdate() = 0;
 
