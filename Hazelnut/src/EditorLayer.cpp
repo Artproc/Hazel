@@ -47,8 +47,8 @@ namespace Hazel {
 		public:
 			void OnCreate()
 			{
-				auto& transform = GetComponent<TransformComponent>().Transform;
-				transform[3][0] = rand() % 10 - 5.0f;
+				auto& translate = GetComponent<TransformComponent>().Translation;
+				translate.x = rand() % 10 - 5.0f;
 			}
 
 			void OnDestroy()
@@ -56,17 +56,17 @@ namespace Hazel {
 
 			void OnUpdate(Timestep ts)
 			{
-				auto& transform = GetComponent<TransformComponent>().Transform;
+				auto& translation = GetComponent<TransformComponent>().Translation;
 				float speed = 5.0f;
 
 				if (Input::IsKeyPressed(Key::A))
-					transform = glm::translate(transform, glm::vec3(-1.0f, 0.0f, 0.0f) * (speed * ts.GetSeconds()));
-				if (Input::IsKeyPressed(Key::W))
-					transform = glm::translate(transform, glm::vec3(0.0f, 1.0f, 0.0f) * (speed * ts.GetSeconds()));
-				if (Input::IsKeyPressed(Key::S))
-					transform = glm::translate(transform, glm::vec3(0.0f, -1.0f, 0.0f) * (speed * ts.GetSeconds()));
+					translation.x -= speed * ts;
 				if (Input::IsKeyPressed(Key::D))
-					transform = glm::translate(transform, glm::vec3(1.0f, 0.0f, 0.0f) * (speed * ts.GetSeconds()));
+					translation.x += speed * ts;
+				if (Input::IsKeyPressed(Key::W))
+					translation.y += speed * ts;
+				if (Input::IsKeyPressed(Key::S))
+					translation.y -= speed * ts;
 
 			}
 		};
