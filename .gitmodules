@@ -15,3 +15,6 @@
 	url = https://github.com/g-truc/glm
 	branch = master
 	
+[submodule "Hazel/vendor/yaml-cpp"]
+	path = Hazel/vendor/yaml-cpp
+	url = https://github.com/thecherno/yaml-cpp
