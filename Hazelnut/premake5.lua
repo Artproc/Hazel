@@ -9,9 +9,15 @@ project "Hazelnut"
 
 	files
 	{
-		src/**.h",
-		src/**.cpp"
+		"src/**.h",
+		"src/**.cpp"
 	}
+
+	 defines
+    {
+       
+        "YAML_CPP_STATIC_DEFINE"  
+    }
 
 	includedirs
 	{

@@ -1,6 +1,6 @@
 #include "SceneHierarchyPanel.h"
 
-#include "imgui/imgui.h"
+#include <imgui/imgui.h>
 #include <imgui/imgui_internal.h>
 #include "Hazel/Scene/Components.h"
 #include <glm/gtc/type_ptr.hpp>
@@ -16,6 +16,7 @@ namespace Hazel {
 	void SceneHierarchyPanel::SetContext(const Ref<Scene>& context)
 	{
 		m_Context = context;
+		m_SelectionContext = {};
 	}
 
 	void SceneHierarchyPanel::OnImGuiRender()
@@ -51,7 +52,7 @@ namespace Hazel {
 		{
 			DrawComponents(m_SelectionContext);
 
-			
+
 		}//selection context
 
 		ImGui::End();
